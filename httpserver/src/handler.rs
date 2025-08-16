@@ -4,6 +4,13 @@ use std::collections::HashMap;
 use std::env;
 use std::fs;
 
+#[derive(Serialize, Deserialize)]
+pub struct OrderStatus {
+    order_id: i32,
+    order_date: String,
+    order_status: String,
+}
+
 pub trait Handler {
     fn handle(req: &HttpRequest) -> HttpResponse;
     fn load_file(file_name: &str) -> Option<String> {
@@ -15,17 +22,9 @@ pub trait Handler {
         contents.ok()
     }
 }
-#[derive(Serialize, Deserialize)]
-pub struct OrderStatus {
-    order_id: i32,
-    order_date: String,
-    order_status: String,
-}
 
 pub struct StaticPageHandler;
-
 pub struct PageNotFoundHandler;
-
 pub struct WebServiceHandler;
 
 impl Handler for PageNotFoundHandler {
